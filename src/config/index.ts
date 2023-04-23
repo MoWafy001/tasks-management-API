@@ -14,6 +14,10 @@ const config: ConfigInterface = {
     bcrypt: {
         saltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS, 10) || 10,
     },
+    JWT: {
+        secret: process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_EXPIRES_IN || '1d',
+    },
 };
 
 export default config;

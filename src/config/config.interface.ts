@@ -10,4 +10,8 @@ export interface ConfigInterface {
     bcrypt: {
         saltRounds: number;
     };
+    JWT: {
+        secret: string;
+        expiresIn: string;
+    };
 }
