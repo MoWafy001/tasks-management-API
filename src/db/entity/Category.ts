@@ -6,6 +6,7 @@ import {
   BaseEntity,
 } from "typeorm";
 import { User } from "./User";
+import { Task } from "./Task";
 
 @Entity({ name: "categories" })
 export class Category extends BaseEntity {
@@ -21,4 +22,7 @@ export class Category extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.taskCategories)
   user: User;
+
+  @ManyToOne(() => Task, (task) => task.category)
+  tasks: Task;
 }
