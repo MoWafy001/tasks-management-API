@@ -1,11 +1,23 @@
-import express from 'express';
+import config from "./config/config";
+import express from "express";
+import { AppDataSource } from "./db/data-source";
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
-});
+const main = async () => {
+  // Initialize database
+  console.log("Initializing database...");
+  await AppDataSource.initialize();
+  console.log("Database initialized");
+
+  // Start server
+  app.listen(config.port, () => {
+    console.log(`Server is listening on port ${config.port}`);
+  });
+};
+
+main().catch((err) => console.error);
