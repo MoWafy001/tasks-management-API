@@ -3,12 +3,12 @@ import { DataSource } from "typeorm";
 import { User } from "./entity/User";
 import { Category } from "./entity/Category";
 import { Task } from "./entity/Task";
-import config from "../config/config";
+import config from "../config";
 
-export const AppDataSource = new DataSource({
+export default new DataSource({
   ...config.db,
   type: "mysql",
   synchronize: true,
   logging: false,
-  entities: [User, Category, Task]
+  entities: [User, Category, Task],
 });
