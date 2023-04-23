@@ -16,6 +16,7 @@ const main = async () => {
 
   // Initialize express app
   const app = express();
+  app.use(express.json());
   applyMiddlewaresPre(app);
   app.use("/", mainRouter);
   applyMiddlewaresPost(app);
