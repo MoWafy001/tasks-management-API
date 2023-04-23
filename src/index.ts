@@ -2,8 +2,7 @@ import config from "./config";
 import express from "express";
 import AppDataSource from "./db/data-source";
 import mainRouter from "./routes";
-import { applyErrorHandling } from "./middlewares/error-handling";
-import { applyGlobalMiddlewares } from "./middlewares/global";
+import { applyMiddlewaresPost, applyMiddlewaresPre } from "./middlewares";
 
 const main = async () => {
   // Initialize database
@@ -17,9 +16,9 @@ const main = async () => {
 
   // Initialize express app
   const app = express();
-  applyGlobalMiddlewares(app); // before
+  applyMiddlewaresPre(app);
   app.use("/", mainRouter);
-  applyErrorHandling(app); // after
+  applyMiddlewaresPost(app);
 
   // Start server
   app.listen(config.port, () => {

@@ -9,12 +9,12 @@ export class HttpError extends Error {
   }
 }
 
-const handle404 = (req: Request, res: Response, next: NextFunction) => {
+export const handle404 = (req: Request, res: Response, next: NextFunction) => {
   const err = new HttpError(404, "Not Found");
   next(err);
 };
 
-const handleErrors = (
+export const handleErrors = (
   err: any,
   req: Request,
   res: Response,
@@ -24,9 +24,4 @@ const handleErrors = (
     status: err.status || 500,
     message: err.message || "Internal Server Error",
   });
-};
-
-export const applyErrorHandling = (app: any) => {
-  app.use(handle404);
-  app.use(handleErrors);
 };
