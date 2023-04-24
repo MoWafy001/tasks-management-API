@@ -1,5 +1,6 @@
 import { RequestMod } from '../../common/interfaces/request.mod';
 import { Task } from '../../db/entity/Task';
+import { GetAllQueryDto } from '../../dto/categories/get-all.query';
 import { CreateTaskDto } from '../../dto/tasks/create-task';
 import { UpdateTaskDto } from '../../dto/tasks/update-task';
 import { findOneCategoryById } from '../categories';
@@ -28,8 +29,15 @@ export const createTask = async (createTaskDto: CreateTaskDto, req: RequestMod):
     });
 };
 
-export const findtasksByUser = (userId: number): Promise<Task[]> => {
-    return Task.createQueryBuilder('task').where('task.userId = :userId', { userId }).getMany();
+export const findtasksByUser = (userId: number, options: GetAllQueryDto): Promise<Task[]> => {
+    const query = Task.createQueryBuilder('task').where('task.userId = :userId', { userId });
+
+    if (options.filter) query.andWhere('task.title LIKE :filter', { filter: `%${options.filter}%` });
+    if (options.sort) query.orderBy('id', options.sort);
+    if (options.limit) query.limit(options.limit);
+    if (options.offset) query.offset(options.offset);
+
+    return query.getMany();
 };
 
 export const findOneTaskById = (id: number): Promise<Task> => {

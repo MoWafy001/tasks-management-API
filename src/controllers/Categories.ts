@@ -12,6 +12,7 @@ import {
 import { HttpError } from '../middlewares/error-handling';
 import { RequestMod } from '../common/interfaces/request.mod';
 import { UpdateCategoryDto } from '../dto/categories/update-category';
+import { GetAllQueryDto } from '../dto/categories/get-all.query';
 
 export const CategoriesController: ICRUDController = {
     create: function (req: RequestMod, res: Response, next: NextFunction): void {
@@ -22,7 +23,9 @@ export const CategoriesController: ICRUDController = {
     },
 
     getAll: function (req: RequestMod, res: Response, next: NextFunction): void {
-        findCategoriesByUser(req.user.userId)
+        const options = validateDto(GetAllQueryDto, req.query);
+
+        findCategoriesByUser(req.user.userId, options)
             .then((categories) => res.json(categories))
             .catch((err) => next(new HttpError(500, err.message)));
     },

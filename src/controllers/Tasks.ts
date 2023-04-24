@@ -6,6 +6,7 @@ import { CreateTaskDto } from '../dto/tasks/create-task';
 import { createTask, deleteTask, findOneTaskById, findtasksByUser, updateTask } from '../services/tasks';
 import { HttpError } from '../middlewares/error-handling';
 import { UpdateTaskDto } from '../dto/tasks/update-task';
+import { GetAllQueryDto } from '../dto/categories/get-all.query';
 
 export const TasksController: ICRUDController = {
     create: function (req: RequestMod, res: Response, next: NextFunction): void {
@@ -16,7 +17,9 @@ export const TasksController: ICRUDController = {
     },
 
     getAll: function (req: RequestMod, res: Response, next: NextFunction): void {
-        findtasksByUser(req.user.userId)
+        const options = validateDto(GetAllQueryDto, req.query);
+
+        findtasksByUser(req.user.userId, options)
             .then((tasks) => res.json(tasks))
             .catch((err) => next(new HttpError(500, err.message)));
     },
