@@ -18,7 +18,7 @@ export const CategoriesController: ICRUDController = {
     create: function (req: RequestMod, res: Response, next: NextFunction): void {
         const createCategoryDto = validateDto(CreateCategoryDto, req.body);
         createCategory(createCategoryDto, req)
-            .then((category) => res.json(category))
+            .then((category) => res.status(201).json(category))
             .catch((err) => next(new HttpError(500, err.message)));
     },
 

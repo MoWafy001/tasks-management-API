@@ -12,7 +12,7 @@ export const TasksController: ICRUDController = {
     create: function (req: RequestMod, res: Response, next: NextFunction): void {
         const createTaskDto = validateDto(CreateTaskDto, req.body);
         createTask(createTaskDto, req)
-            .then((category) => res.json(category))
+            .then((category) => res.status(201).json(category))
             .catch((err) => next(new HttpError(500, err.message)));
     },
 
