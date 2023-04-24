@@ -12,7 +12,7 @@ export const createUser = (createUserDto: CreateUserDto): Promise<User> => {
     return user.save();
 };
 
-export const findOneById = (userId: number): Promise<User> => {
+export const findOneUserById = (userId: number): Promise<User> => {
     return User.findOneOrFail({
         where: {
             id: userId,

@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from './error-handling';
 import { verifyJWT } from '../services/auth/jwt';
+import { RequestMod } from '../common/interfaces/request.mod';
+import { IJWTPayload } from '../common/interfaces/jwt-payload';
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: RequestMod, res: Response, next: NextFunction) => {
     try {
         // Get the authorization header
         const authHeader = req.headers.authorization;
@@ -13,10 +15,9 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         if (!token) throw new Error('Access token required');
 
         // Verify the token
-        const decoded = verifyJWT(token);
+        const decoded: IJWTPayload = verifyJWT(token);
 
         // Attach the user to the request
-        // @ts-ignore
         req.user = decoded;
 
         next();

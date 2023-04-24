@@ -5,6 +5,7 @@ import { signJWT } from './jwt';
 
 export const login = async (loginDto: LoginDto) => {
     const { email, password } = loginDto;
+    
     const user = await User.findOneBy({ email });
     if (!user) throw new Error('Invalid credentials');
 

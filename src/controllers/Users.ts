@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { validateDto } from '../helpers';
 import { CreateUserDto } from '../dto/users/create-user';
-import { createUser, findOneById } from '../services/users';
+import { createUser, findOneUserById } from '../services/users';
 import { HttpError } from '../middlewares/error-handling';
 
 export const UsersController = {
@@ -15,7 +15,7 @@ export const UsersController = {
     },
 
     getLoggedInUser: function (req: Request & { user: { userId: number } }, res: Response, next: NextFunction): void {
-        findOneById(req.user.userId)
+        findOneUserById(req.user.userId)
             .then((user) => res.json(user))
             .catch((err) => {
                 next(new HttpError(500, err.message));

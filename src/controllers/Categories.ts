@@ -1,24 +1,51 @@
-import { NextFunction, Request, Response } from "express";
-import ICRUDController from "./interfaces/crud.controller";
+import { NextFunction, Request, Response } from 'express';
+import ICRUDController from './interfaces/crud.controller';
+import { validateDto } from '../helpers';
+import { CreateCategoryDto } from '../dto/categories/create-category';
+import {
+    createCategory,
+    deleteCategory,
+    findCategoriesByUser,
+    findOneCategoryById,
+    updateCategory,
+} from '../services/categories';
+import { HttpError } from '../middlewares/error-handling';
+import { RequestMod } from '../common/interfaces/request.mod';
+import { UpdateCategoryDto } from '../dto/categories/update-category';
 
 export const CategoriesController: ICRUDController = {
-  create: function (req: Request, res: Response, next: NextFunction): void {
-    res.send("create category");
-  },
+    create: function (req: RequestMod, res: Response, next: NextFunction): void {
+        const createCategoryDto = validateDto(CreateCategoryDto, req.body);
+        createCategory(createCategoryDto, req)
+            .then((category) => res.json(category))
+            .catch((err) => next(new HttpError(500, err.message)));
+    },
 
-  getAll: function (req: Request, res: Response): void {
-    res.send("get all categories");
-  },
+    getAll: function (req: RequestMod, res: Response, next: NextFunction): void {
+        findCategoriesByUser(req.user.userId)
+            .then((categories) => res.json(categories))
+            .catch((err) => next(new HttpError(500, err.message)));
+    },
 
-  getOne: function (req: Request, res: Response): void {
-    res.send("get one category");
-  },
+    getOne: function (req: Request, res: Response, next: NextFunction): void {
+        const id = parseInt(req.params.id);
+        findOneCategoryById(id)
+            .then((category) => (category ? res.json(category) : next(new HttpError(404, 'Category not found'))))
+            .catch((err) => next(new HttpError(500, err.message)));
+    },
 
-  update: function (req: Request, res: Response): void {
-    res.send("update category");
-  },
+    update: function (req: Request, res: Response, next: NextFunction): void {
+        const id = parseInt(req.params.id);
+        const updateCategoryDto = validateDto(UpdateCategoryDto, req.body);
+        updateCategory(id, updateCategoryDto)
+            .then((result) => res.json(result))
+            .catch((err) => next(new HttpError(500, err.message)));
+    },
 
-  delete: function (req: Request, res: Response): void {
-    res.send("delete category");
-  },
+    delete: function (req: Request, res: Response, next: NextFunction): void {
+        const id = parseInt(req.params.id);
+        deleteCategory(id)
+            .then((result) => res.json(result))
+            .catch((err) => next(new HttpError(500, err.message)));
+    },
 };

@@ -5,6 +5,7 @@ import { ValidationError, validateSync } from 'class-validator';
 import { HttpError } from '../middlewares/error-handling';
 import bcrypt from 'bcrypt';
 import config from '../config';
+import { pick } from 'lodash';
 
 export const setCRUDRoutes = (router: Router, controller: ICRUDController, prefix: string = '/') => {
     router.post(prefix, controller.create);
@@ -16,9 +17,8 @@ export const setCRUDRoutes = (router: Router, controller: ICRUDController, prefi
 
 // validate DTO
 export const validateDto = (DtoClass: any, body: any) => {
-    const createItemDto = plainToClassFromExist(new DtoClass(), body);
-    let errors = validateSync(createItemDto);
-    console.log(errors);
+    let createItemDto = plainToClassFromExist(new DtoClass(), body);
+    let errors = validateSync(createItemDto, { whitelist: true });
 
     if (errors.length > 0) {
         errors = formatDtoValidationErrors(errors);
@@ -27,6 +27,7 @@ export const validateDto = (DtoClass: any, body: any) => {
             errors: errors,
         });
     }
+
     return createItemDto;
 };
 
