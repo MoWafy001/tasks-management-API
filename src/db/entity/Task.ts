@@ -18,7 +18,7 @@ import { Category } from "./Category";
  * categoryId (foreign key to Category)
  */
 
-enum StatusTypes {
+export enum StatusTypes {
   TODO = "todo",
   IN_PROGRESS = "in-progress",
   DONE = "done",
@@ -39,6 +39,7 @@ export class Task extends BaseEntity {
   @Column({
     type: "varchar",
     length: 255,
+    default: "",
   })
   description: string;
 
