@@ -27,4 +27,4 @@ const main = async () => {
   });
 };
 
-main().catch((err) => console.error);
+main().catch(console.error);
