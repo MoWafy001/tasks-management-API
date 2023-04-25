@@ -62,4 +62,4 @@ npm run prod # for production
 ```
 
 ## API Documentation
-visit [API Documentation](https://documenter.getpostman.com/view/10674486/Tz5tWv7ohttps://app.swaggerhub.com/apis/DSQ8LJX2_1/Tasks-Management-API/1.0.0#/Task) for more information about the API endpoints.
+visit [API Documentation](https://app.swaggerhub.com/apis/DSQ8LJX2_1/Tasks-Management-API/1.0.0#/Task) for more information about the API endpoints.
