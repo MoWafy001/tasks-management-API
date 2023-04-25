@@ -62,4 +62,4 @@ npm run prod # for production
 ```
 
 ## API Documentation
-visit [API Documentation](https://app.swaggerhub.com/apis/DSQ8LJX2_1/Tasks-Man
+visit [API Documentation](https://app.swaggerhub.com/apis/DSQ8LJX2_1/Tasks-Management-API/1.0.0#/Task) for more information about the API endpoints.
