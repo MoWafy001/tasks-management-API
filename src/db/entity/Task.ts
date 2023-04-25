@@ -1,12 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  BaseEntity,
-} from "typeorm";
-import { User } from "./User";
-import { Category } from "./Category";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BaseEntity } from 'typeorm';
+import { User } from './User';
+import { Category } from './Category';
 
 /**
  * title
@@ -19,40 +13,47 @@ import { Category } from "./Category";
  */
 
 export enum StatusTypes {
-  TODO = "todo",
-  IN_PROGRESS = "in-progress",
-  DONE = "done",
+    TODO = 'todo',
+    IN_PROGRESS = 'in-progress',
+    DONE = 'done',
 }
 
-@Entity({ name: "tasks" })
+@Entity({ name: 'tasks' })
 export class Task extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({
-    type: "varchar",
-    length: 255,
-    nullable: false,
-  })
-  title: string;
+    @Column({
+        type: 'varchar',
+        length: 255,
+        nullable: false,
+    })
+    title: string;
 
-  @Column({
-    type: "varchar",
-    length: 255,
-    default: "",
-  })
-  description: string;
+    @Column({
+        type: 'varchar',
+        length: 255,
+        default: '',
+    })
+    description: string;
 
-  @Column({
-    type: "enum",
-    enum: StatusTypes,
-    default: StatusTypes.TODO,
-  })
-  status: StatusTypes;
+    @Column({
+        type: 'enum',
+        enum: StatusTypes,
+        default: StatusTypes.TODO,
+    })
+    status: StatusTypes;
 
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
+    @ManyToOne(() => User, (user) => user.tasks)
+    user: User;
 
-  @ManyToOne(() => Category, (category) => category.tasks)
-  category: Category;
+    @ManyToOne(() => Category, (category) => category.tasks)
+    category: Category;
+
+    // categoryId
+    @Column({
+        type: 'int',
+        nullable: true,
+    })
+    categoryId: number;
 }
