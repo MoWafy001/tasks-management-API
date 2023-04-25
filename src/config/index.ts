@@ -2,7 +2,7 @@ require('dotenv').config();
 import { ConfigInterface } from './config.interface';
 
 const config: ConfigInterface = {
-    port: parseInt(process.env.PORT, 10),
+    port: parseInt(process.env.PORT, 10) || 3000,
     db: {
         // MySQL
         host: process.env.DB_HOST,
